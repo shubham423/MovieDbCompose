@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class MovieRepositoryImpl @Inject constructor(private val apiService: ApiService) : MovieRepository {
+class MovieRepositoryImpl @Inject constructor(private val apiService: ApiService) :
+    MovieRepository {
     override fun getPopularMovies(): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 20),

@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.moviedbcompose.navigation.Screen
-import com.example.moviedbcompose.presentation.screens.HomeScreen
+import com.example.moviedbcompose.presentation.screens.home.HomeScreen
 
 @Composable
 fun SetupNavGraph(
