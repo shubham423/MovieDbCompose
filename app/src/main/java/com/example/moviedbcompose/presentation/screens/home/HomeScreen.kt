@@ -1,5 +1,6 @@
 package com.example.moviedbcompose.presentation.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,17 +21,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
-import com.example.moviedbcompose.data.model.GenreResponse
+import com.example.moviedbcompose.data.model.Genre
 import com.example.moviedbcompose.data.model.Movie
+import com.example.moviedbcompose.presentation.components.GenreItem
 import com.example.moviedbcompose.presentation.components.MovieItem
 import com.example.moviedbcompose.presentation.components.SearchBar
-import com.example.moviedbcompose.utils.Resource
 
 @Composable
 fun HomeScreen(
     navigateToMovieDetail: (movieId: String) -> Unit,
     popularMovies: LazyPagingItems<Movie>,
-    genres: State<Resource<GenreResponse>>
+    genres: List<Genre>
 ) {
     Column(
         modifier = Modifier
@@ -55,6 +56,15 @@ fun HomeScreen(
                 if (movie != null) {
                     MovieItem(movie = movie)
                 }
+            }
+        }
+        Spacer(modifier = Modifier.height(24.dp))
+
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Log.d("getGenres ", "4 ${genres.size}")
+            items(genres.size) { index ->
+                val genre = genres[index]
+                GenreItem(genre = genre, onGenreClicked = {})
             }
         }
     }

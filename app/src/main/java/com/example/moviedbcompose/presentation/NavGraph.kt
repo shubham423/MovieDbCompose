@@ -1,6 +1,8 @@
 package com.example.moviedbcompose.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -35,7 +37,7 @@ fun NavGraphBuilder.homeRoute(
     composable(route = Screen.Home.route) {
         val homeViewModel: HomeVIewModel = hiltViewModel()
         val popularMovies = homeViewModel.popularMovies.value.collectAsLazyPagingItems()
-        val genres = homeViewModel.genres
+        val genres by homeViewModel.genres.collectAsState()
 
         HomeScreen(navigateToMovieDetail, popularMovies, genres)
     }
