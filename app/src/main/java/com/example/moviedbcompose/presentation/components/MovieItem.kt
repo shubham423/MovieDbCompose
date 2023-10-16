@@ -2,7 +2,8 @@ package com.example.moviedbcompose.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +21,7 @@ import com.example.moviedbcompose.utils.Constants.BASE_POSTER_IMAGE_URL
 fun MovieItem(movie: Movie) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 4.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card {
@@ -31,6 +31,9 @@ fun MovieItem(movie: Movie) {
                 placeholder = painterResource(id = R.drawable.ic_launcher_background),
                 error = painterResource(id = R.drawable.ic_launcher_background),
                 contentDescription = null,
+                modifier = Modifier
+                    .height(210.dp)
+                    .width(145.dp)
             )
         }
         Text(
@@ -40,7 +43,7 @@ fun MovieItem(movie: Movie) {
     }
 }
 
-fun trimTitle(text: String) = if (text.length <= 26) text else {
-    val textWithEllipsis = text.removeRange(startIndex = 26, endIndex = text.length)
+fun trimTitle(text: String) = if (text.length <= 18) text else {
+    val textWithEllipsis = text.removeRange(startIndex = 18, endIndex = text.length)
     "$textWithEllipsis..."
 }

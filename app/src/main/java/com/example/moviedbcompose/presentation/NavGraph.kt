@@ -35,7 +35,8 @@ fun NavGraphBuilder.homeRoute(
     composable(route = Screen.Home.route) {
         val homeViewModel: HomeVIewModel = hiltViewModel()
         val popularMovies = homeViewModel.popularMovies.value.collectAsLazyPagingItems()
+        val genres = homeViewModel.genres
 
-        HomeScreen(navigateToMovieDetail, popularMovies)
+        HomeScreen(navigateToMovieDetail, popularMovies, genres)
     }
 }
