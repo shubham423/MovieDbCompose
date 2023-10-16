@@ -20,6 +20,8 @@ import com.example.moviedbcompose.utils.Constants.BASE_POSTER_IMAGE_URL
 
 @Composable
 fun MovieItem(movie: Movie) {
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth(),

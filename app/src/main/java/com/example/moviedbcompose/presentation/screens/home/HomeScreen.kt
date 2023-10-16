@@ -13,6 +13,10 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -32,6 +36,7 @@ fun HomeScreen(
     popularMovies: LazyPagingItems<Movie>,
     genres: List<Genre>
 ) {
+    var selectedGenreId by remember { mutableStateOf(-1) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,12 +63,18 @@ fun HomeScreen(
             }
         }
         Spacer(modifier = Modifier.height(24.dp))
-
+        if (genres.isNotEmpty()){
+            selectedGenreId= genres[0].id!!
+        }
         LazyRow(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
             Log.d("getGenres ", "4 ${genres.size}")
             items(genres.size) { index ->
                 val genre = genres[index]
-                GenreItem(genre = genre, onGenreClicked = {})
+                selectedGenreId?.let {
+                    GenreItem(genre = genre, selectedGenreId = it, onGenreClicked = { genreId ->
+                        selectedGenreId = genreId
+                    })
+                }
             }
         }
     }
