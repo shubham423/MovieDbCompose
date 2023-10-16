@@ -3,6 +3,7 @@ package com.example.moviedbcompose.presentation.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -38,7 +39,8 @@ fun MovieItem(movie: Movie) {
         }
         Text(
             text = trimTitle(movie.title),
-            color = Color.White
+            color = Color.White,
+            modifier = Modifier.padding(top = 4.dp)
         )
     }
 }
