@@ -19,16 +19,12 @@ fun SetupNavGraph(
     navController: NavHostController,
 ) {
     NavHost(
-        startDestination = startDestination,
-        navController = navController
+        startDestination = startDestination, navController = navController
     ) {
         homeRoute(
             navigateToMovieDetail = {
 
             },
-            onCategoryClicked = {
-
-            }
         )
     }
 
@@ -36,13 +32,23 @@ fun SetupNavGraph(
 
 fun NavGraphBuilder.homeRoute(
     navigateToMovieDetail: (movieId: String) -> Unit,
-    onCategoryClicked: (category: String) -> Unit,
 ) {
     composable(route = Screen.Home.route) {
         val homeViewModel: HomeVIewModel = hiltViewModel()
         val popularMovies = homeViewModel.popularMovies.value.collectAsLazyPagingItems()
+        val categoryBasedMovies = homeViewModel.categoryBasedMovies.value.collectAsLazyPagingItems()
         val genres by homeViewModel.genres.collectAsState()
+        val categories = homeViewModel.movieCategories
 
-        HomeScreen(navigateToMovieDetail, popularMovies, genres,onCategoryClicked)
+        HomeScreen(
+            navigateToMovieDetail = navigateToMovieDetail,
+            popularMovies = popularMovies,
+            genres,
+            onCategoryClicked = {
+                homeViewModel.getMoviesByCategory(it)
+            },
+            categories = categories.toList(),
+            categoryBasedMovies = categoryBasedMovies
+        )
     }
 }

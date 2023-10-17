@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.moviedbcompose.R
@@ -20,7 +21,7 @@ import com.example.moviedbcompose.data.model.Movie
 import com.example.moviedbcompose.utils.Constants.BASE_POSTER_IMAGE_URL
 
 @Composable
-fun MovieItem(movie: Movie) {
+fun MovieItem(movie: Movie, height: Dp = 210.dp) {
 
 
     Column(
@@ -36,9 +37,9 @@ fun MovieItem(movie: Movie) {
                 error = painterResource(id = R.drawable.movie_placeholder),
                 contentDescription = null,
                 modifier = Modifier
-                    .height(210.dp)
+                    .height(height)
                     .width(145.dp),
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.FillBounds
             )
         }
         Text(

@@ -23,8 +23,8 @@ interface ApiService {
 
     @GET("movie/{category}")
     suspend fun getMoviesByCategories(
-        @Query("page") page: Int = 0,
         @Path("category") category: String,
+        @Query("page") page: Int = 0,
         @Query("api_key") apiKey: String = Constants.API_KEY
     ): MovieResponse
 }

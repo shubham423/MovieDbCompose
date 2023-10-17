@@ -26,10 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moviedbcompose.data.model.Genre
+import java.util.Locale
 
 @Composable
-fun GenreItem(genre: Genre, selectedGenreId: Int, onGenreClicked: (Genre) -> Unit) {
+fun GenreItem(category: String, selectedCategory: String, onCategoryClicked: (String) -> Unit) {
     var componentWidth by remember { mutableStateOf(0.dp) }
     val density = LocalDensity.current
     Column(
@@ -37,15 +37,15 @@ fun GenreItem(genre: Genre, selectedGenreId: Int, onGenreClicked: (Genre) -> Uni
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable {
-                onGenreClicked(genre)
+                onCategoryClicked(category)
             },
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
     ) {
         Text(
-            text = genre.name,
+            text = formatStringForUI(category),
             style = TextStyle(
-                fontSize = 14.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 textAlign = TextAlign.Center,
@@ -57,13 +57,19 @@ fun GenreItem(genre: Genre, selectedGenreId: Int, onGenreClicked: (Genre) -> Uni
             }
         )
         Spacer(modifier = Modifier.height(8.dp))
-        AnimatedVisibility(visible = selectedGenreId == genre.id) {
+        AnimatedVisibility(visible = category == selectedCategory) {
             Divider(
                 modifier = Modifier
-                    .height(4.dp)
+                    .height(6.dp)
                     .width(componentWidth), color = Color(0xFF3A3F47),
                 thickness = 12.dp
             )
         }
     }
+}
+
+fun formatStringForUI(input: String): String {
+    val parts = input.split("_")
+    val formattedParts = parts.map { it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } }
+    return formattedParts.joinToString(" ")
 }

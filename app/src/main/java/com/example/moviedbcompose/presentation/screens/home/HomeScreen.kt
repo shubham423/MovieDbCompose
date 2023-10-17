@@ -1,6 +1,5 @@
 package com.example.moviedbcompose.presentation.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +9,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,8 +38,10 @@ fun HomeScreen(
     popularMovies: LazyPagingItems<Movie>,
     genres: List<Genre>,
     onCategoryClicked: (category: String) -> Unit,
+    categories: List<String>,
+    categoryBasedMovies: LazyPagingItems<Movie>,
 ) {
-    var selectedGenreId by remember { mutableStateOf(-1) }
+    var selectedCategory by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,21 +68,33 @@ fun HomeScreen(
             }
         }
         Spacer(modifier = Modifier.height(24.dp))
-        if (genres.isNotEmpty()) {
-            selectedGenreId = genres[0].id!!
+        if (categories.isNotEmpty()) {
+            selectedCategory = categories[0]
         }
         LazyRow(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-            Log.d("getGenres ", "4 ${genres.size}")
-            items(genres.size) { index ->
-                val genre = genres[index]
-                selectedGenreId?.let {
-                    GenreItem(genre = genre, selectedGenreId = it, onGenreClicked = { genre ->
-                        selectedGenreId = genre.id!!
-                        onCategoryClicked.invoke(genre.name)
+            items(categories.size) { index ->
+                val category = categories[index]
+                GenreItem(
+                    category = category,
+                    selectedCategory = selectedCategory,
+                    onCategoryClicked = { categoryClicked ->
+                        selectedCategory = categoryClicked
+                        onCategoryClicked.invoke(categoryClicked)
                     })
+            }
+        }
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(categoryBasedMovies.itemCount) { index ->
+                val movie = categoryBasedMovies[index]
+                if (movie != null) {
+                    MovieItem(movie = movie, height = 150.dp)
                 }
             }
         }
     }
-
 }

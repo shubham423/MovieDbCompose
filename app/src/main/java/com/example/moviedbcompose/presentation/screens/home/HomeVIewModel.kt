@@ -1,7 +1,9 @@
 package com.example.moviedbcompose.presentation.screens.home
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,9 +34,14 @@ class HomeVIewModel @Inject constructor(private val repository: MovieRepository)
     private var _genres: MutableStateFlow<List<Genre>> = MutableStateFlow(emptyList())
     val genres = _genres.asStateFlow()
 
+
+    var movieCategories = mutableStateListOf<String>()
+        private set
+
     init {
         getGenres()
         getPopularMovies()
+        movieCategories.addAll(listOf("top_rated", "upcoming", "now_playing", "popular"))
     }
 
     private fun getPopularMovies() {
@@ -43,9 +50,9 @@ class HomeVIewModel @Inject constructor(private val repository: MovieRepository)
         }
     }
 
-    private fun getMoviesByCategory(category: String) {
+     fun getMoviesByCategory(category: String) {
         viewModelScope.launch {
-            _popularMovies.value =
+            _categoryBasedMovies.value =
                 repository.getMoviesByCategories(category).cachedIn(viewModelScope)
         }
     }
