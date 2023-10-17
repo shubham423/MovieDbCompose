@@ -34,7 +34,8 @@ import com.example.moviedbcompose.presentation.components.SearchBar
 fun HomeScreen(
     navigateToMovieDetail: (movieId: String) -> Unit,
     popularMovies: LazyPagingItems<Movie>,
-    genres: List<Genre>
+    genres: List<Genre>,
+    onCategoryClicked: (category: String) -> Unit,
 ) {
     var selectedGenreId by remember { mutableStateOf(-1) }
     Column(
@@ -54,7 +55,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
         SearchBar(onSearch = {})
         Spacer(modifier = Modifier.height(24.dp))
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(26.dp)) {
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
             items(popularMovies.itemCount) { index ->
                 val movie = popularMovies[index]
                 if (movie != null) {
@@ -63,16 +64,17 @@ fun HomeScreen(
             }
         }
         Spacer(modifier = Modifier.height(24.dp))
-        if (genres.isNotEmpty()){
-            selectedGenreId= genres[0].id!!
+        if (genres.isNotEmpty()) {
+            selectedGenreId = genres[0].id!!
         }
         LazyRow(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
             Log.d("getGenres ", "4 ${genres.size}")
             items(genres.size) { index ->
                 val genre = genres[index]
                 selectedGenreId?.let {
-                    GenreItem(genre = genre, selectedGenreId = it, onGenreClicked = { genreId ->
-                        selectedGenreId = genreId
+                    GenreItem(genre = genre, selectedGenreId = it, onGenreClicked = { genre ->
+                        selectedGenreId = genre.id!!
+                        onCategoryClicked.invoke(genre.name)
                     })
                 }
             }

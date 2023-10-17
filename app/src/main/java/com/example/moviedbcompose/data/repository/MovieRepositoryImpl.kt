@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.example.moviedbcompose.data.model.Genre
 import com.example.moviedbcompose.data.model.Movie
 import com.example.moviedbcompose.data.network.ApiService
+import com.example.moviedbcompose.data.paging.MoviesByCategoriesSource
 import com.example.moviedbcompose.data.paging.PopularMoviesPagingSource
 import com.example.moviedbcompose.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -32,5 +33,14 @@ class MovieRepositoryImpl @Inject constructor(private val apiService: ApiService
                 emit(Resource.Error(message = e.message.toString()))
             }
         }
+    }
+
+    override fun getMoviesByCategories(category: String): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(enablePlaceholders = false, pageSize = 20),
+            pagingSourceFactory = {
+                MoviesByCategoriesSource(api = apiService, category)
+            }
+        ).flow
     }
 }

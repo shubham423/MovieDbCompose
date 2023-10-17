@@ -9,5 +9,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
     fun getPopularMovies(): Flow<PagingData<Movie>>
+    fun getMoviesByCategories(category:String): Flow<PagingData<Movie>>
     fun getGenres():Flow<Resource<List<Genre>>>
 }

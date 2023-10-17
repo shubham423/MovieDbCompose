@@ -26,6 +26,9 @@ class HomeVIewModel @Inject constructor(private val repository: MovieRepository)
     private var _popularMovies = mutableStateOf<Flow<PagingData<Movie>>>(emptyFlow())
     val popularMovies: State<Flow<PagingData<Movie>>> = _popularMovies
 
+    private var _categoryBasedMovies = mutableStateOf<Flow<PagingData<Movie>>>(emptyFlow())
+    val categoryBasedMovies: State<Flow<PagingData<Movie>>> = _categoryBasedMovies
+
     private var _genres: MutableStateFlow<List<Genre>> = MutableStateFlow(emptyList())
     val genres = _genres.asStateFlow()
 
@@ -39,6 +42,14 @@ class HomeVIewModel @Inject constructor(private val repository: MovieRepository)
             _popularMovies.value = repository.getPopularMovies().cachedIn(viewModelScope)
         }
     }
+
+    private fun getMoviesByCategory(category: String) {
+        viewModelScope.launch {
+            _popularMovies.value =
+                repository.getMoviesByCategories(category).cachedIn(viewModelScope)
+        }
+    }
+
 
     private fun getGenres() {
         viewModelScope.launch {

@@ -87,7 +87,6 @@ dependencies {
     implementation("androidx.paging:paging-compose:3.3.0-alpha02")
 
     //Chucker for network inspection
-
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 

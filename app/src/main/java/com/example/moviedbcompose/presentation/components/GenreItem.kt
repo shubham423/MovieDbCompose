@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.example.moviedbcompose.data.model.Genre
 
 @Composable
-fun GenreItem(genre: Genre, selectedGenreId: Int, onGenreClicked: (Int) -> Unit) {
+fun GenreItem(genre: Genre, selectedGenreId: Int, onGenreClicked: (Genre) -> Unit) {
     var componentWidth by remember { mutableStateOf(0.dp) }
     val density = LocalDensity.current
     Column(
@@ -37,7 +37,7 @@ fun GenreItem(genre: Genre, selectedGenreId: Int, onGenreClicked: (Int) -> Unit)
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable {
-                genre.id?.let { onGenreClicked(it) }
+                onGenreClicked(genre)
             },
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
@@ -57,7 +57,7 @@ fun GenreItem(genre: Genre, selectedGenreId: Int, onGenreClicked: (Int) -> Unit)
             }
         )
         Spacer(modifier = Modifier.height(8.dp))
-        AnimatedVisibility(visible = selectedGenreId==genre.id) {
+        AnimatedVisibility(visible = selectedGenreId == genre.id) {
             Divider(
                 modifier = Modifier
                     .height(4.dp)

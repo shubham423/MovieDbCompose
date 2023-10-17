@@ -25,6 +25,9 @@ fun SetupNavGraph(
         homeRoute(
             navigateToMovieDetail = {
 
+            },
+            onCategoryClicked = {
+
             }
         )
     }
@@ -33,12 +36,13 @@ fun SetupNavGraph(
 
 fun NavGraphBuilder.homeRoute(
     navigateToMovieDetail: (movieId: String) -> Unit,
+    onCategoryClicked: (category: String) -> Unit,
 ) {
     composable(route = Screen.Home.route) {
         val homeViewModel: HomeVIewModel = hiltViewModel()
         val popularMovies = homeViewModel.popularMovies.value.collectAsLazyPagingItems()
         val genres by homeViewModel.genres.collectAsState()
 
-        HomeScreen(navigateToMovieDetail, popularMovies, genres)
+        HomeScreen(navigateToMovieDetail, popularMovies, genres,onCategoryClicked)
     }
 }

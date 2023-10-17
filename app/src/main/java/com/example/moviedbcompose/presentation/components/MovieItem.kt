@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -31,12 +32,13 @@ fun MovieItem(movie: Movie) {
             val imagePath = "$BASE_POSTER_IMAGE_URL/${movie.posterPath}"
             AsyncImage(
                 model = imagePath,
-                placeholder = painterResource(id = R.drawable.ic_launcher_background),
-                error = painterResource(id = R.drawable.ic_launcher_background),
+                placeholder = painterResource(id = R.drawable.movie_placeholder),
+                error = painterResource(id = R.drawable.movie_placeholder),
                 contentDescription = null,
                 modifier = Modifier
                     .height(210.dp)
-                    .width(145.dp)
+                    .width(145.dp),
+                contentScale = ContentScale.Fit
             )
         }
         Text(
