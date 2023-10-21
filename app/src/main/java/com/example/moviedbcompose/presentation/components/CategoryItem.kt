@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import java.util.Locale
 
 @Composable
-fun GenreItem(category: String, selectedCategory: String, onCategoryClicked: (String) -> Unit) {
+fun CategoryItem(category: String, selectedCategory: String, onCategoryClicked: (String) -> Unit) {
     var componentWidth by remember { mutableStateOf(0.dp) }
     val density = LocalDensity.current
     Column(
@@ -70,6 +70,7 @@ fun GenreItem(category: String, selectedCategory: String, onCategoryClicked: (St
 
 fun formatStringForUI(input: String): String {
     val parts = input.split("_")
-    val formattedParts = parts.map { it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } }
+    val formattedParts =
+        parts.map { it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } }
     return formattedParts.joinToString(" ")
 }

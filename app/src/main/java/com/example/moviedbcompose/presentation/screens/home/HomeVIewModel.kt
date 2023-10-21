@@ -1,7 +1,6 @@
 package com.example.moviedbcompose.presentation.screens.home
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -16,7 +15,6 @@ import com.example.moviedbcompose.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
@@ -42,6 +40,7 @@ class HomeVIewModel @Inject constructor(private val repository: MovieRepository)
         getGenres()
         getPopularMovies()
         movieCategories.addAll(listOf("top_rated", "upcoming", "now_playing", "popular"))
+        getMoviesByCategory("top_rated")
     }
 
     private fun getPopularMovies() {

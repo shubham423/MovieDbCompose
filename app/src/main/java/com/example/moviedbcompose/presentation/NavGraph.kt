@@ -37,13 +37,11 @@ fun NavGraphBuilder.homeRoute(
         val homeViewModel: HomeVIewModel = hiltViewModel()
         val popularMovies = homeViewModel.popularMovies.value.collectAsLazyPagingItems()
         val categoryBasedMovies = homeViewModel.categoryBasedMovies.value.collectAsLazyPagingItems()
-        val genres by homeViewModel.genres.collectAsState()
         val categories = homeViewModel.movieCategories
 
         HomeScreen(
             navigateToMovieDetail = navigateToMovieDetail,
             popularMovies = popularMovies,
-            genres,
             onCategoryClicked = {
                 homeViewModel.getMoviesByCategory(it)
             },

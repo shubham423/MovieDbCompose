@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,9 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
-import com.example.moviedbcompose.data.model.Genre
 import com.example.moviedbcompose.data.model.Movie
-import com.example.moviedbcompose.presentation.components.GenreItem
+import com.example.moviedbcompose.presentation.components.CategoryItem
 import com.example.moviedbcompose.presentation.components.MovieItem
 import com.example.moviedbcompose.presentation.components.SearchBar
 
@@ -36,12 +34,11 @@ import com.example.moviedbcompose.presentation.components.SearchBar
 fun HomeScreen(
     navigateToMovieDetail: (movieId: String) -> Unit,
     popularMovies: LazyPagingItems<Movie>,
-    genres: List<Genre>,
     onCategoryClicked: (category: String) -> Unit,
     categories: List<String>,
     categoryBasedMovies: LazyPagingItems<Movie>,
 ) {
-    var selectedCategory by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf("top_rated") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,13 +65,10 @@ fun HomeScreen(
             }
         }
         Spacer(modifier = Modifier.height(24.dp))
-        if (categories.isNotEmpty()) {
-            selectedCategory = categories[0]
-        }
         LazyRow(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
             items(categories.size) { index ->
                 val category = categories[index]
-                GenreItem(
+                CategoryItem(
                     category = category,
                     selectedCategory = selectedCategory,
                     onCategoryClicked = { categoryClicked ->
@@ -83,7 +77,7 @@ fun HomeScreen(
                     })
             }
         }
-
+        Spacer(modifier = Modifier.height(8.dp))
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             verticalArrangement = Arrangement.spacedBy(16.dp),
